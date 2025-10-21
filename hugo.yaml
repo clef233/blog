@@ -1,0 +1,42 @@
+baseURL: 'https://username.github.io'
+languageCode: 'zh-cn'
+title: '我的博客'
+theme: 'PaperMod'
+
+# 基础设置
+params:
+  defaultTheme: auto
+  disableThemeToggle: false
+  env: production
+
+  # SEO 设置
+  description: "个人技术博客"
+  keywords: ["博客", "技术", "分享"]
+  author: "作者名"
+
+# 菜单配置
+menu:
+  main:
+    - identifier: home
+      name: 首页
+      url: /
+      weight: 10
+    - identifier: archives
+      name: 归档
+      url: /archives/
+      weight: 20
+    - identifier: search
+      name: 搜索
+      url: /search/
+      weight: 30
+
+# 构建设置
+build:
+  writeStats: true
+
+# 输出设置
+outputs:
+  home:
+    - HTML
+    - RSS
+    - JSON
