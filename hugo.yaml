@@ -46,21 +46,20 @@ params:
   disableAnchoredHeadings: true
 
   # Giscus评论系统配置
+  giscus:
+    repo: "clef233/blog"
+    repoId: "R_kgDOQGjgjA"
+    category: "Announcements"
+    categoryId: "DIC_kwDOQGjgjM4Cw5ub"
+    mapping: "pathname"
+    strict: "0"
+    reactionsEnabled: "1"
+    emitMetadata: "0"
+    inputPosition: "bottom"
+    lang: "zh-CN"
+    loading: "lazy"
   comments:
     enable: true
-    type: giscus
-    giscus:
-      repo: "clef233/blog"
-      repoId: "R_kgDOQGjgjA"
-      category: "Announcements"
-      categoryId: "DIC_kwDOQGjgjM4Cw5ub"
-      mapping: "pathname"
-      strict: "0"
-      reactionsEnabled: "1"
-      emitMetadata: "0"
-      inputPosition: "bottom"
-      lang: "zh-CN"
-      loading: "lazy"
 
 # 菜单配置
 menu:

@@ -22,8 +22,8 @@ draft: false
 
 如果你有任何问题或建议，欢迎通过以下方式联系我：
 
-- GitHub: [username](https://github.com/username)
-- Email: your.email@example.com
+- GitHub: [clef233](https://github.com/clef233)
+- Email: clef233@example.com
 
 ---
 
