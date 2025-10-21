@@ -1,0 +1,187 @@
+/* 自定义CSS样式 */
+
+/* 变量定义 - 深色模式 */
+:root {
+  --custom-primary-color: #3b82f6;
+  --custom-accent-color: #f59e0b;
+  --custom-background-primary: #0f172a;
+  --custom-background-secondary: #1e293b;
+  --custom-text-primary: #f1f5f9;
+  --custom-text-secondary: #94a3b8;
+  --custom-border-color: #334155;
+}
+
+/* 浅色模式变量 */
+:root[data-theme='light'] {
+  --custom-primary-color: #2563eb;
+  --custom-accent-color: #ea580c;
+  --custom-background-primary: #ffffff;
+  --custom-background-secondary: #f8fafc;
+  --custom-text-primary: #0f172a;
+  --custom-text-secondary: #475569;
+  --custom-border-color: #e2e8f0;
+}
+
+/* 全局样式 */
+body {
+  font-family: 'Inter', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  line-height: 1.6;
+  color: var(--custom-text-primary);
+}
+
+/* 链接样式 */
+a {
+  color: var(--custom-accent-color);
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+a:hover {
+  text-decoration: underline;
+  opacity: 0.8;
+}
+
+/* 代码块样式 */
+.chroma {
+  background-color: var(--custom-background-secondary) !important;
+  border-radius: 8px;
+  padding: 1rem;
+  margin: 1rem 0;
+  border: 1px solid var(--custom-border-color);
+}
+
+/* 引用块样式 */
+blockquote {
+  border-left: 4px solid var(--custom-primary-color);
+  padding-left: 1rem;
+  margin: 1.5rem 0;
+  font-style: italic;
+  color: var(--custom-text-secondary);
+}
+
+/* 表格样式 */
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 1.5rem 0;
+}
+
+th, td {
+  border: 1px solid var(--custom-border-color);
+  padding: 0.75rem;
+  text-align: left;
+}
+
+th {
+  background-color: var(--custom-background-secondary);
+  font-weight: 600;
+}
+
+/* 文章元数据样式 */
+.post-meta {
+  color: var(--custom-text-secondary);
+  font-size: 0.9rem;
+  margin: 0.5rem 0;
+}
+
+.post-meta span {
+  margin-right: 1rem;
+}
+
+/* 标签样式 */
+.tags a {
+  display: inline-block;
+  background-color: var(--custom-primary-color);
+  color: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: 1rem;
+  font-size: 0.8rem;
+  margin: 0.25rem;
+  text-decoration: none;
+}
+
+.tags a:hover {
+  background-color: var(--custom-accent-color);
+  text-decoration: none;
+}
+
+/* 搜索框样式 */
+.search-container input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 2px solid var(--custom-border-color);
+  border-radius: 8px;
+  font-size: 1rem;
+  background-color: var(--custom-background-primary);
+  color: var(--custom-text-primary);
+  transition: border-color 0.2s ease;
+}
+
+.search-container input:focus {
+  outline: none;
+  border-color: var(--custom-primary-color);
+}
+
+/* 导航栏样式优化 */
+.navbar {
+  border-bottom: 1px solid var(--custom-border-color);
+  backdrop-filter: blur(10px);
+}
+
+/* 主页欢迎区域样式 */
+.home-info {
+  text-align: center;
+  padding: 2rem;
+  background: linear-gradient(135deg, var(--custom-background-secondary), var(--custom-background-primary));
+  border-radius: 12px;
+  margin: 2rem 0;
+  border: 1px solid var(--custom-border-color);
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .home-info {
+    margin: 1rem;
+    padding: 1.5rem;
+  }
+
+  .post-meta span {
+    display: block;
+    margin: 0.25rem 0;
+  }
+}
+
+/* 滚动条样式 */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--custom-background-primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--custom-border-color);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--custom-text-secondary);
+}
+
+/* 加载动画 */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+  animation: fadeIn 0.6s ease-out;
+}
+
+/* 卡片悬停效果 */
+.post-entry:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}

@@ -5,14 +5,36 @@ theme: 'PaperMod'
 
 # 基础设置
 params:
+  env: production
+  title: 我的博客
+  description: "个人技术博客，分享技术心得和学习笔记"
+  keywords: ["博客", "技术", "分享", "编程", "学习"]
+  author: "作者名"
   defaultTheme: auto
   disableThemeToggle: false
-  env: production
 
-  # SEO 设置
-  description: "个人技术博客"
-  keywords: ["博客", "技术", "分享"]
-  author: "作者名"
+  # 主页信息
+  homeInfoParams:
+    Title: "欢迎来到我的博客 🏠"
+    Content: >
+      这里是我分享技术心得、学习笔记和生活感悟的地方。希望我的分享能对你有所帮助！
+
+  # 社交图标
+  socialIcons:
+    - name: "github"
+      url: "https://github.com/username"
+    - name: "twitter"
+      url: "https://twitter.com/username"
+
+  # 搜索配置
+  fuseOpts:
+    isCaseSensitive: false
+    shouldSort: true
+    location: 0
+    distance: 1000
+    threshold: 0.4
+    minMatchCharLength: 0
+    keys: ["title", "permalink", "summary", "content"]
 
 # 菜单配置
 menu:
@@ -34,9 +56,31 @@ menu:
 build:
   writeStats: true
 
+# 代码高亮配置
+markup:
+  highlight:
+    style: github-dark
+    lineNos: true
+    lineNumbersInTable: true
+    tabWidth: 4
+  goldmark:
+    renderer:
+      unsafe: true
+
+# 压缩设置
+minify:
+  disableXML: true
+  minifyOutput: true
+
 # 输出设置
 outputs:
   home:
     - HTML
     - RSS
     - JSON
+
+# sitemap配置
+sitemap:
+  changefreq: weekly
+  filename: sitemap.xml
+  priority: 0.8
