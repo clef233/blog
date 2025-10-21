@@ -1,4 +1,4 @@
-baseURL: 'https://username.github.io'
+baseURL: 'https://{{ .Site.Params.github_username | default "username" }}.github.io'
 languageCode: 'zh-cn'
 title: '我的博客'
 theme: 'PaperMod'
@@ -7,6 +7,12 @@ theme: 'PaperMod'
 params:
   env: production
   title: 我的博客
+
+  # GitHub配置
+  github_username: "username"
+  repo: "blog"
+
+  # SEO 设置
   description: "个人技术博客，分享技术心得和学习笔记"
   keywords: ["博客", "技术", "分享", "编程", "学习"]
   author: "作者名"
