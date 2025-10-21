@@ -1,4 +1,4 @@
-baseURL: 'https://{{ .Site.Params.github_username | default "username" }}.github.io'
+baseURL: 'https://username.github.io'
 languageCode: 'zh-cn'
 title: '我的博客'
 theme: 'PaperMod'
