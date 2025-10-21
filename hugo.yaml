@@ -1,4 +1,4 @@
-baseURL: 'https://username.github.io'
+baseURL: 'https://clef233.github.io'
 languageCode: 'zh-cn'
 title: '我的博客'
 theme: 'PaperMod'
@@ -41,6 +41,26 @@ params:
     threshold: 0.4
     minMatchCharLength: 0
     keys: ["title", "permalink", "summary", "content"]
+
+  # 关闭锚点链接功能，但保留目录
+  disableAnchoredHeadings: true
+
+  # Giscus评论系统配置
+  comments:
+    enable: true
+    type: giscus
+    giscus:
+      repo: "clef233/blog"
+      repoId: "R_kgDON12345"  # 需要替换为实际的repo ID
+      category: "Announcements"
+      categoryId: "DIC_kwDON12345"  # 需要替换为实际的category ID
+      mapping: "pathname"
+      strict: "0"
+      reactionsEnabled: "1"
+      emitMetadata: "0"
+      inputPosition: "bottom"
+      lang: "zh-CN"
+      loading: "lazy"
 
 # 菜单配置
 menu:
