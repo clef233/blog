@@ -1,4 +1,4 @@
-baseURL: 'https://clef233.github.io'
+baseURL: 'https://clef233.github.io/blog/'
 languageCode: 'zh-cn'
 title: '我的博客'
 theme: 'PaperMod'
@@ -51,9 +51,9 @@ params:
     type: giscus
     giscus:
       repo: "clef233/blog"
-      repoId: "R_kgDOQGjgjA"  # 需要替换为实际的repo ID
+      repoId: "R_kgDOQGjgjA"
       category: "Announcements"
-      categoryId: "DIC_kwDOQGjgjM4Cw5ub"  # 需要替换为实际的category ID
+      categoryId: "DIC_kwDOQGjgjM4Cw5ub"
       mapping: "pathname"
       strict: "0"
       reactionsEnabled: "1"
