@@ -141,6 +141,11 @@ main article.post-single aside.sidebar {
     margin: 0 !important;
     width: 100% !important;
     box-sizing: border-box !important;
+
+    /* 修复移动端容器问题 */
+    min-width: 0 !important;                    /* 允许容器收缩 */
+    contain: layout style !important;          /* 优化性能 */
+    isolation: isolate !important;             /* 创建新的层叠上下文 */
 }
 
 /* ========================================
@@ -171,6 +176,13 @@ main article.post-single .post-content-wrapper {
     border-radius: 12px !important;  /* 圆角：8px-20px */
     border: 2px solid var(--border-color) !important;
     box-shadow: 0 4px 20px rgba(var(--primary-color), 0.15) !important;  /* 阴影强度 */
+
+    /* 修复移动端宽度问题 */
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
+    contain: layout style !important;
 }
 
 /* ========================================
@@ -385,6 +397,8 @@ main article.post-single aside.sidebar::-webkit-scrollbar-thumb:hover {
     main article.post-single aside.sidebar {
         padding-bottom: 0.5rem !important;
         margin-bottom: 0.5rem !important;
+        width: 100% !important;
+        overflow-x: hidden !important;
     }
 
     .toc-title {
@@ -394,6 +408,82 @@ main article.post-single aside.sidebar::-webkit-scrollbar-thumb:hover {
 
     .toc-content {
         font-size: 0.85rem !important;
+    }
+
+    /* 修复移动端目录链接显示问题 */
+    .toc-link {
+        padding: 0.3rem 0.5rem !important;  /* 减小内边距 */
+        font-size: 0.8rem !important;         /* 减小字体大小 */
+        line-height: 1.3 !important;         /* 减小行高 */
+        word-wrap: break-word !important;    /* 允许文字换行 */
+        word-break: break-all !important;    /* 强制换行 */
+        white-space: normal !important;      /* 允许换行 */
+        overflow-wrap: break-word !important; /* 现代浏览器换行 */
+        min-width: 0 !important;             /* 允许收缩 */
+        max-width: 100% !important;          /* 限制最大宽度 */
+    }
+
+    .toc-list {
+        width: 100% !important;
+        overflow-wrap: break-word !important;
+    }
+
+    .toc-list li {
+        margin: 0.25rem 0 !important;        /* 减小列表项间距 */
+        width: 100% !important;
+    }
+}
+
+/* 添加超小屏幕设备优化 */
+@media (max-width: 480px) {
+    .toc-content {
+        font-size: 0.75rem !important;        /* 进一步减小字体 */
+    }
+
+    .toc-link {
+        padding: 0.2rem 0.3rem !important;   /* 进一步减小内边距 */
+        font-size: 0.7rem !important;         /* 进一步减小字体 */
+        line-height: 1.2 !important;         /* 减小行高 */
+    }
+
+    .toc-title {
+        font-size: 0.9rem !important;        /* 减小标题字体 */
+        padding: 0.8rem 1rem !important;     /* 减小标题内边距 */
+    }
+
+    /* 调整多级目录缩进 */
+    .toc-level-2 {
+        margin-left: 0.8rem !important;       /* 减小二级缩进 */
+        font-size: 0.65rem !important;
+    }
+
+    .toc-level-3 {
+        margin-left: 1.6rem !important;       /* 减小三级缩进 */
+        font-size: 0.6rem !important;
+    }
+
+    .toc-level-4,
+    .toc-level-5,
+    .toc-level-6 {
+        margin-left: 2rem !important;         /* 减小更深层级缩进 */
+        font-size: 0.55rem !important;
+    }
+}
+
+/* 添加横屏手机优化 */
+@media (max-width: 768px) and (orientation: landscape) {
+    .toc-content {
+        font-size: 0.8rem !important;
+    }
+
+    .toc-link {
+        padding: 0.25rem 0.4rem !important;
+        font-size: 0.75rem !important;
+    }
+
+    main article.post-single aside.sidebar {
+        max-height: 40vh !important;         /* 横屏时限制高度 */
+        overflow-y: auto !important;
     }
 }
 
