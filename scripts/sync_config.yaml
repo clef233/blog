@@ -1,0 +1,67 @@
+# Obsidian to Hugo 同步配置文件
+
+# Obsidian 仓库路径
+obsidian_vault_path: "D:/Obsidian/Vault"  # 修改为你的 Obsidian 仓库路径
+
+# Hugo 内容目录路径
+hugo_content_path: "D:/Projects/blog/content"  # 修改为你的 Hugo 内容路径
+
+# 默认作者
+default_author: "clef233"
+
+# 默认分类
+default_categories:
+  - "博客文章"
+
+# 默认标签
+default_tags: []
+
+# 时区设置
+timezone: "Asia/Shanghai"
+
+# 日志级别
+log_level: "INFO"
+
+# 排除模式（正则表达式）
+exclude_patterns:
+  - ".*\\.excalidraw$"      # 排除 Excalidraw 文件
+  - ".*\\.canvas$"          # 排除 Canvas 文件
+  - ".*\\.sticker$"         # 排除贴纸文件
+  - ".*/_templates/.*"      # 排除模板目录
+  - ".*/\\.obsidian/.*"     # 排除 Obsidian 配置目录
+  - ".*/\\.trash/.*"        # 排除回收站
+  - ".*_template\\.md$"     # 排除模板文件
+  - ".*Daily Note.*"        # 排除每日笔记（可根据需要调整）
+
+# 内容处理选项
+content_processing:
+  # 是否转换 Obsidian 风格链接为标准 Markdown
+  convert_wikilinks: true
+
+  # 是否移除 Obsidian 注释
+  remove_comments: true
+
+  # 是否提取内容中的标签
+  extract_content_tags: true
+
+  # 自动生成摘要长度
+  summary_length: 200
+
+# Frontmatter 映射
+frontmatter_mapping:
+  # Obsidian 字段名 -> Hugo 字段名
+  created: date
+  modified: lastmod
+  description: description
+  summary: summary
+
+# 文件组织
+file_organization:
+  # 按年份组织文章
+  organize_by_year: true
+
+  # 文件名格式
+  filename_format: "{title}"  # 可用变量: {title}, {date}, {slug}
+
+  # 是否清理文件名中的特殊字符
+  sanitize_filenames: true
