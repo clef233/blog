@@ -1,0 +1,487 @@
+{{- define "main" }}
+
+{{- if (.Param "ShowToc") }}
+<!-- ========================================
+   🎨 左侧目录样式配置文件
+   ========================================
+
+   📝 快速修改指南：
+   🎨 主要颜色：rgb(139, 108, 239) (紫色)
+   📏 侧边栏宽度：280px (可调整200px-400px)
+   🔍 透明度：0.08 (可调整0-1)
+   💫 模糊效果：10px (可调整5px-20px)
+
+   💡 使用技巧：
+   1. 修改颜色：替换所有 rgb(139, 108, 239) 为你想要的颜色
+   2. 调整透明度：修改 rgba() 中的第四个参数 (0-1)
+   3. 改变大小：调整 --sidebar-width 变量
+   4. 修改圆角：调整 border-radius 值
+   ======================================== -->
+
+<style>
+/* ========================================
+   🔧 基础布局变量设置
+   ======================================== */
+:root {
+    /* 侧边栏宽度设置 - 调整范围：200px-400px */
+    --sidebar-width: 280px;
+
+    /* 侧边栏与内容的间距 - 调整范围：1rem-4rem */
+    --content-gap: 2.5rem;
+
+    /* 主题颜色设置 - 可完全自定义 */
+    --primary-color: rgb(139, 108, 239);        /* 主要紫色 */
+    --secondary-color: rgb(108, 92, 231);      /* 深紫色 */
+    --border-color: rgb(139, 108, 239);        /* 边框紫色 */
+    --background-opacity: 0;                /* 背景透明度 */
+    --content-opacity: 0;                    /* 内容区域透明度 */
+
+    /* ========================================
+       🌓 主题适配文字颜色变量
+       ======================================== */
+    /* 浅色模式文字颜色 - 使用更深的颜色 */
+    --toc-text-color: #111827;                /* 更深的灰色文字 */
+    --toc-text-hover: #000000;                 /* 悬停黑色文字 */
+    --toc-bg-light: rgba(255, 255, 255, 0.9);   /* 更浅的背景 */
+    --toc-border-light: rgba(139, 108, 239, 0.3); /* 浅色边框 */
+
+    /* 深色模式文字颜色 */
+    --toc-text-dark: #f9fafb;                 /* 浅色文字 */
+    --toc-text-hover-dark: #ffffff;           /* 悬停浅色文字 */
+    --toc-bg-dark: rgba(17, 24, 39, 0.8);     /* 深色背景 */
+    --toc-border-dark: rgba(139, 108, 239, 0.5); /* 深色边框 */
+
+    /* 强调效果颜色 */
+    --emphasis-bg: rgba(139, 108, 239, 0.15);  /* 强调背景 */
+    --emphasis-border: rgb(139, 108, 239);      /* 强调边框 */
+    --emphasis-shadow: rgba(139, 108, 239, 0.25); /* 强调阴影 */
+}
+
+/* ========================================
+   🌙 深色模式适配
+   ======================================== */
+@media (prefers-color-scheme: dark) {
+    :root {
+        /* 深色模式下使用浅色文字颜色 */
+        --toc-text-color: var(--toc-text-dark);
+        --toc-text-hover: var(--toc-text-hover-dark);
+        --toc-bg-light: var(--toc-bg-dark);
+        --toc-border-light: var(--toc-border-dark);
+    }
+}
+
+/* ========================================
+   ☀️ 浅色模式适配 - 默认已经是浅色模式
+   ======================================== */
+@media (prefers-color-scheme: light) {
+    :root {
+        /* 浅色模式下确保使用深色文字颜色 */
+        --toc-text-color: #111827;
+        --toc-text-hover: #000000;
+        --toc-bg-light: rgba(255, 255, 255, 0.9);
+        --toc-border-light: rgba(139, 108, 239, 0.3);
+    }
+}
+
+/* ========================================
+   🎨 主题切换支持（通过HTML属性）
+   ======================================== */
+html[data-theme='dark'] {
+    --toc-text-color: var(--toc-text-dark);
+    --toc-text-hover: var(--toc-text-hover-dark);
+    --toc-bg-light: var(--toc-bg-dark);
+    --toc-border-light: var(--toc-border-dark);
+}
+
+html[data-theme='light'] {
+    --toc-text-color: #111827;
+    --toc-text-hover: #000000;
+    --toc-bg-light: rgba(255, 255, 255, 0.9);
+    --toc-border-light: rgba(139, 108, 239, 0.3);
+}
+
+/* ========================================
+   📐 网格布局核心配置
+   ======================================== */
+main {
+    width: 100% !important;
+    max-width: none !important;
+}
+
+main article.post-single {
+    display: grid !important;
+    grid-template-columns: var(--sidebar-width) 1fr !important;
+    gap: var(--content-gap) !important;
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+/* ========================================
+   📱 侧边栏容器配置
+   ======================================== */
+main article.post-single aside.sidebar {
+    /* 定位设置 */
+    position: sticky !important;
+    top: 2rem !important;  /* 距离顶部距离：1rem-4rem */
+
+    /* 尺寸和滚动 */
+    height: fit-content !important;
+    max-height: calc(100vh - 4rem) !important;  /* 最大高度 */
+    overflow-y: auto !important;
+
+    /* 网格布局 */
+    order: -1 !important;  /* 确保在左侧 */
+    grid-column: 1 !important;
+
+    /* 内边距 */
+    padding-right: 1.5rem !important;
+    padding-left: 0.5rem !important;
+    margin: 0 !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+/* ========================================
+   📄 文章内容区域配置
+   ======================================== */
+main article.post-single .post-content-wrapper {
+    order: 2 !important;
+    grid-column: 2 !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+/* ========================================
+   🎨 目录容器样式配置
+   ======================================== */
+.sidebar-toc {
+    /* 🌈 背景和透明度设置 */
+    background: rgba(var(--primary-color), var(--background-opacity)) !important;
+    backdrop-filter: blur(10px) !important;  /* 毛玻璃效果：5px-20px */
+
+    /* 📐 布局设置 */
+    padding: 0 !important;
+    overflow: hidden !important;
+
+    /* 🎭 外观设置 */
+    border-radius: 12px !important;  /* 圆角：8px-20px */
+    border: 2px solid var(--border-color) !important;
+    box-shadow: 0 4px 20px rgba(var(--primary-color), 0.15) !important;  /* 阴影强度 */
+}
+
+/* ========================================
+   🏷️ 目录标题栏配置
+   ======================================== */
+.toc-title {
+    /* 🌈 背景渐变设置 */
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%) !important;
+    /* 💡 可修改角度：45deg, 90deg, 180deg, 270deg */
+
+    /* ✏️ 文字设置 */
+    color: white !important;
+    font-size: 1.1rem !important;        /* 字体大小：0.9rem-1.3rem */
+    font-weight: 700 !important;          /* 字重：400(细体) - 900(粗体) */
+    text-align: center !important;
+    letter-spacing: 0.5px !important;     /* 字间距：0-2px */
+
+    /* 📏 间距设置 */
+    padding: 1rem 1.25rem !important;     /* 内边距：0.5rem-2rem */
+    margin: 0 !important;
+    border-bottom: none !important;
+}
+
+/* ========================================
+   📋 目录内容区域配置
+   ======================================== */
+.toc-content {
+    /* 📏 间距和字体 */
+    padding: 1rem !important;          /* 简洁内边距 */
+    font-size: 0.9rem !important;        /* 字体大小：0.8rem-1.1rem */
+
+    /* 🌈 主题感知背景透明度 */
+    background: var(--toc-bg-dark) !important;  /* 修复点：无论什么模式，内容背景都使用深色变量 */
+}
+
+/* ========================================
+   📝 目录列表配置
+   ======================================== */
+.toc-list {
+    padding-left: 0 !important;
+    margin: 0 !important;
+    list-style: none !important;
+}
+
+.toc-list li {
+    margin: 0.35rem 0 !important;        /* 列表项间距：0.2rem-0.8rem */
+    line-height: 1.5 !important;
+}
+
+/* ========================================
+   🔗 目录链接配置 - 主题感知
+   ======================================== */
+.toc-link {
+    /* ✏️ 主题感知文字颜色 */
+    color: var(--toc-text-dark) !important; /* 修复点(1/3): 强制使用为深色模式定义的“浅色文字” */
+    text-decoration: none !important;
+    padding: 0.4rem 0.8rem !important;   /* 简洁内边距 */
+    display: block !important;
+    border-radius: 6px !important;      /* 简洁圆角 */
+    transition: all 0.3s ease !important; /* 平滑动画 */
+    font-weight: 500 !important;          /* 字重：400-700 */
+
+    /* 🎨 边框和定位 */
+    border-left: 3px solid transparent !important;  /* 简洁边框 */
+    position: relative !important;
+}
+
+/* ========================================
+   🖱️ 鼠标悬停效果 - 简洁版
+   ======================================== */
+.toc-link:hover {
+    /* 🌈 主题感知颜色和背景 */
+    color: var(--toc-text-hover-dark) !important; /* 修复点(2/3): 强制使用为深色模式定义的“浅色悬停文字” */
+    background: var(--emphasis-bg) !important;
+
+    /* 🎨 边框和动画 */
+    border-left-color: var(--emphasis-border) !important;
+    transform: translateX(2px) !important;  /* 简洁移动效果 */
+}
+
+/* ========================================
+   ✨ 当前章节高亮效果 - 简洁增强版
+   ======================================== */
+.toc-link.active {
+    /* 🌈 主题感知颜色和背景 */
+    color: var(--toc-text-hover-dark) !important; /* 修复点(3/3): 强制使用为深色模式定义的“浅色悬停文字” */
+    font-weight: 700 !important;            /* 加粗显示 */
+
+    /* 🎨 简洁背景效果 */
+    background: var(--emphasis-bg) !important;
+    border-left: 3px solid var(--emphasis-border) !important;
+
+    /* ✨ 简洁动画和位置 */
+    transform: translateX(2px) !important;
+    position: relative !important;
+}
+
+/* 添加活动链接前的指示器 */
+.toc-link.active::before {
+    content: '▶' !important;
+    position: absolute !important;
+    left: -8px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    color: var(--primary-color) !important;
+    font-size: 0.6rem !important;
+    animation: pulse 2s infinite !important;
+}
+
+/* ========================================
+   ✨ 脉冲动画配置
+   ======================================== */
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1 !important;
+    }
+    50% {
+        opacity: 0.5 !important;
+    }
+}
+
+/* ========================================
+   📊 多级标题缩进配置
+   ======================================== */
+.toc-level-1 {
+    font-weight: 600 !important;           /* 一级标题：粗体 */
+    margin-left: 0 !important;
+}
+
+.toc-level-2 {
+    margin-left: 1.2rem !important;        /* 二级标题缩进 */
+    font-weight: 500 !important;
+    font-size: 0.85rem !important;        /* 字体递减 */
+}
+
+.toc-level-3 {
+    margin-left: 2.4rem !important;        /* 三级标题缩进 */
+    font-weight: normal !important;
+    font-size: 0.8rem !important;
+}
+
+.toc-level-4 {
+    margin-left: 3.6rem !important;        /* 四级标题缩进 */
+    font-weight: normal !important;
+    font-size: 0.75rem !important;
+}
+
+.toc-level-5 {
+    margin-left: 4.8rem !important;        /* 五级标题缩进 */
+    font-weight: normal !important;
+    font-size: 0.7rem !important;
+}
+
+.toc-level-6 {
+    margin-left: 6rem !important;          /* 六级标题缩进 */
+    font-weight: normal !important;
+    font-size: 0.65rem !important;
+}
+
+/* ========================================
+   🎚️ 自定义滚动条样式
+   ======================================== */
+main article.post-single aside.sidebar::-webkit-scrollbar {
+    width: 6px !important;                 /* 滚动条宽度：4px-12px */
+}
+
+main article.post-single aside.sidebar::-webkit-scrollbar-track {
+    background: rgba(var(--primary-color), 0.1) !important;  /* 轨道颜色 */
+    border-radius: 3px !important;
+}
+
+main article.post-single aside.sidebar::-webkit-scrollbar-thumb {
+    background: rgba(var(--primary-color), 0.4) !important;  /* 滑块颜色 */
+    border-radius: 3px !important;
+}
+
+main article.post-single aside.sidebar::-webkit-scrollbar-thumb:hover {
+    background: rgba(var(--primary-color), 0.6) !important;  /* 悬停颜色 */
+}
+
+/* ========================================
+   📱 响应式设计配置
+   ======================================== */
+@media (max-width: 1024px) {
+    main article.post-single {
+        grid-template-columns: 1fr !important;  /* 单列布局 */
+        gap: 1rem !important;
+    }
+
+    main article.post-single aside.sidebar {
+        position: static !important;         /* 静态定位 */
+        max-height: none !important;
+        overflow-y: visible !important;
+        order: 1 !important;
+        border-right: none !important;
+        border-bottom: 2px solid var(--border-color) !important;  /* 底部边框 */
+        padding-right: 0 !important;
+        padding-bottom: 1rem !important;
+        margin-bottom: 1rem !important;
+    }
+
+    main article.post-single .post-content-wrapper {
+        order: 2 !important;
+    }
+}
+
+@media (max-width: 768px) {
+    main article.post-single {
+        gap: 0.5rem !important;
+    }
+
+    main article.post-single aside.sidebar {
+        padding-bottom: 0.5rem !important;
+        margin-bottom: 0.5rem !important;
+    }
+
+    .toc-title {
+        margin-bottom: 0.5rem !important;
+        font-size: 1rem !important;
+    }
+
+    .toc-content {
+        font-size: 0.85rem !important;
+    }
+}
+
+/* ========================================
+   🎯 额外的美化效果
+   ======================================== */
+/* 添加平滑滚动 */
+html {
+    scroll-behavior: smooth;
+}
+
+/* 标题锚点偏移，避免被固定头部遮挡 */
+h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {
+    scroll-margin-top: 2rem;
+}
+
+</style>
+{{- end }}
+
+<article class="post-single">
+  {{- if (.Param "ShowToc") }}
+  <aside class="sidebar">
+    {{- partial "sidebar_toc.html" . }}
+  </aside>
+  {{- end }}
+
+  <div class="post-content-wrapper">
+    <header class="post-header">
+      {{ partial "breadcrumbs.html" . }}
+      <h1 class="post-title entry-hint-parent">
+        {{ .Title }}
+        {{- if .Draft }}
+        <span class="entry-hint" title="Draft">
+          <svg xmlns="http://www.w3.org/2000/svg" height="35" viewBox="0 -960 960 960" fill="currentColor">
+            <path
+              d="M160-410v-60h300v60H160Zm0-165v-60h470v60H160Zm0-165v-60h470v60H160Zm360 580v-123l221-220q9-9 20-13t22-4q12 0 23 4.5t20 13.5l37 37q9 9 13 20t4 22q0 11-4.5 22.5T862.09-380L643-160H520Zm300-263-37-37 37 37ZM580-220h38l121-122-18-19-19-18-122 121v38Zm141-141-19-18 37 37-18-19Z" />
+          </svg>
+        </span>
+        {{- end }}
+      </h1>
+      {{- if .Description }}
+      <div class="post-description">
+        {{ .Description }}
+      </div>
+      {{- end }}
+      {{- if not (.Param "hideMeta") }}
+      <div class="post-meta">
+        {{- partial "post_meta.html" . -}}
+        {{- partial "translation_list.html" . -}}
+        {{- partial "edit_post.html" . -}}
+        {{- partial "post_canonical.html" . -}}
+      </div>
+      {{- end }}
+    </header>
+    {{- $isHidden := (.Param "cover.hiddenInSingle") | default (.Param "cover.hidden") | default false }}
+    {{- partial "cover.html" (dict "cxt" . "IsSingle" true "isHidden" $isHidden) }}
+
+    {{- if .Content }}
+    <div class="post-content">
+      {{- if not (.Param "disableAnchoredHeadings") }}
+      {{- partial "anchored_headings.html" .Content -}}
+      {{- else }}{{ .Content }}{{ end }}
+    </div>
+    {{- end }}
+
+    <footer class="post-footer">
+      {{- $tags := .Language.Params.Taxonomies.tag | default "tags" }}
+      <ul class="post-tags">
+        {{- range ($.GetTerms $tags) }}
+        <li><a href="{{ .Permalink }}">{{ .LinkTitle }}</a></li>
+        {{- end }}
+      </ul>
+      {{- if (.Param "ShowPostNavLinks") }}
+      {{- partial "post_nav_links.html" . }}
+      {{- end }}
+      {{- if (and site.Params.ShowShareButtons (ne .Params.disableShare true)) }}
+      {{- partial "share_icons.html" . -}}
+      {{- end }}
+    </footer>
+
+    {{- if (.Param "comments") }}
+    {{- partial "comments.html" . }}
+    {{- end }}
+
+    {{- if (.Param "ShowToc") }}
+    <script src="{{ "js/toc-highlight.js" | relURL }}"></script>
+    {{- end }}
+  </div>
+</article>
+
+{{- end }}{{/* end main */}}

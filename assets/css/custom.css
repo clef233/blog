@@ -1,0 +1,188 @@
+/* 左侧目录样式 - 使用更强的选择器确保优先级 */
+body main article.post-single {
+    display: grid !important;
+    grid-template-columns: 280px 1fr !important;
+    gap: 2.5rem !important;
+}
+
+/* 侧边栏容器 */
+body main article.post-single aside.sidebar {
+    position: sticky !important;
+    top: 2rem !important;
+    max-height: calc(100vh - 4rem) !important;
+    overflow-y: auto !important;
+    border-right: 2px solid var(--border) !important;
+    padding-right: 1.5rem !important;
+    padding-left: 0.5rem !important;
+    order: -1 !important; /* 确保侧边栏在左侧 */
+}
+
+/* 文章内容包装器 */
+.post-content-wrapper {
+    min-width: 0; /* 防止内容溢出 */
+    max-width: 100%;
+}
+
+/* 侧边栏目录样式 */
+.sidebar-toc {
+    font-family: var(--font-family);
+}
+
+.toc-title {
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+    color: var(--primary);
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.toc-content {
+    font-size: 0.9rem;
+}
+
+.toc-list {
+    padding-left: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.toc-list li {
+    margin: 0.4rem 0;
+    line-height: 1.5;
+}
+
+.toc-link {
+    text-decoration: none;
+    color: var(--secondary);
+    display: block;
+    padding: 0.2rem 0.4rem;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+}
+
+.toc-link:hover {
+    color: var(--primary);
+    background-color: var(--code-bg);
+}
+
+.toc-link.active {
+    color: var(--primary);
+    font-weight: 600;
+    background-color: var(--primary-light);
+}
+
+/* 不同级别的缩进 */
+.toc-level-1 {
+    font-weight: 600;
+}
+
+.toc-level-2 {
+    margin-left: 1.2rem;
+    font-weight: 500;
+    font-size: 0.85rem;
+}
+
+.toc-level-3 {
+    margin-left: 2.4rem;
+    font-weight: normal;
+    font-size: 0.8rem;
+}
+
+.toc-level-4 {
+    margin-left: 3.6rem;
+    font-weight: normal;
+    font-size: 0.75rem;
+}
+
+.toc-level-5 {
+    margin-left: 4.8rem;
+    font-weight: normal;
+    font-size: 0.7rem;
+}
+
+.toc-level-6 {
+    margin-left: 6rem;
+    font-weight: normal;
+    font-size: 0.65rem;
+}
+
+/* 文章内容区域 */
+.post-content {
+    min-width: 0; /* 防止内容溢出 */
+}
+
+/* 响应式设计 */
+@media (max-width: 1024px) {
+    .post-single {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .sidebar {
+        position: static;
+        max-height: none;
+        overflow-y: visible;
+        border-right: none;
+        border-bottom: 2px solid var(--border);
+        padding-right: 0;
+        padding-bottom: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    .toc-title {
+        margin-bottom: 1rem;
+        border-bottom: 1px solid var(--border);
+    }
+}
+
+@media (max-width: 768px) {
+    .post-single {
+        gap: 0.5rem;
+    }
+
+    .sidebar {
+        padding-bottom: 0.5rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .toc-title {
+        margin-bottom: 0.5rem;
+        font-size: 1rem;
+    }
+
+    .toc-content {
+        font-size: 0.85rem;
+    }
+
+    .toc-level-2 {
+        margin-left: 1rem;
+    }
+
+    .toc-level-3 {
+        margin-left: 2rem;
+    }
+
+    .toc-level-4 {
+        margin-left: 3rem;
+    }
+}
+
+/* 标题锚点样式 */
+h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {
+    scroll-margin-top: 2rem;
+}
+
+/* 目录标题 */
+.toc-title {
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    color: var(--primary);
+}
+
+/* 活动链接高亮 */
+.toc a.active {
+    color: var(--primary);
+    font-weight: 600;
+}

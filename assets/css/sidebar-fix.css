@@ -1,0 +1,123 @@
+/* 强制覆盖PaperMod主题的默认样式 */
+body {
+    --sidebar-width: 280px;
+    --content-gap: 2.5rem;
+}
+
+/* 重置并强制设置网格布局 */
+main {
+    width: 100% !important;
+    max-width: none !important;
+}
+
+main article.post-single {
+    display: grid !important;
+    grid-template-columns: var(--sidebar-width) 1fr !important;
+    gap: var(--content-gap) !important;
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+/* 侧边栏强制样式 */
+main article.post-single aside.sidebar {
+    position: sticky !important;
+    top: 2rem !important;
+    height: fit-content !important;
+    max-height: calc(100vh - 4rem) !important;
+    overflow-y: auto !important;
+    order: -1 !important;
+    grid-column: 1 !important;
+    border-right: 2px solid var(--border) !important;
+    padding-right: 1.5rem !important;
+    padding-left: 0.5rem !important;
+    background: var(--background) !important;
+    border-radius: 0 !important;
+    margin: 0 !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+/* 文章内容区域强制样式 */
+main article.post-single .post-content-wrapper {
+    order: 2 !important;
+    grid-column: 2 !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+/* 测试目录样式 */
+.test-toc {
+    background: var(--code-bg) !important;
+    padding: 1rem !important;
+    border-radius: 8px !important;
+    border-left: 4px solid var(--primary) !important;
+}
+
+.test-toc h3 {
+    margin: 0 0 1rem 0 !important;
+    color: var(--primary) !important;
+    font-size: 1.1rem !important;
+}
+
+.test-toc ul {
+    list-style: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.test-toc li {
+    margin: 0.5rem 0 !important;
+}
+
+.test-toc a {
+    color: var(--secondary) !important;
+    text-decoration: none !important;
+    padding: 0.25rem 0.5rem !important;
+    display: block !important;
+    border-radius: 4px !important;
+    transition: all 0.2s ease !important;
+}
+
+.test-toc a:hover {
+    color: var(--primary) !important;
+    background: var(--selection-bg) !important;
+}
+
+/* 响应式设计 */
+@media (max-width: 1024px) {
+    main article.post-single {
+        grid-template-columns: 1fr !important;
+        gap: 1rem !important;
+    }
+
+    main article.post-single aside.sidebar {
+        position: static !important;
+        max-height: none !important;
+        overflow-y: visible !important;
+        order: 1 !important;
+        border-right: none !important;
+        border-bottom: 2px solid var(--border) !important;
+        padding-right: 0 !important;
+        padding-bottom: 1rem !important;
+        margin-bottom: 1rem !important;
+    }
+
+    main article.post-single .post-content-wrapper {
+        order: 2 !important;
+    }
+}
+
+@media (max-width: 768px) {
+    main article.post-single {
+        gap: 0.5rem !important;
+    }
+
+    main article.post-single aside.sidebar {
+        padding-bottom: 0.5rem !important;
+        margin-bottom: 0.5rem !important;
+    }
+}

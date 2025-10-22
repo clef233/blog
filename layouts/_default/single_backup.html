@@ -1,0 +1,311 @@
+{{- define "main" }}
+
+{{- if (.Param "ShowToc") }}
+<!-- 内联CSS样式以确保左侧目录工作 -->
+<style>
+/* ========================================
+   🎨 左侧目录样式配置文件
+   ========================================
+   📝 使用说明：
+   - 修改下方CSS变量可快速调整外观
+   - 所有颜色都支持透明度设置
+   - 支持响应式设计和动画效果
+   ======================================== */
+
+/* ========================================
+   🔧 基础布局设置
+   ======================================== */
+body {
+    /* 侧边栏宽度设置 - 可调整：200px-400px */
+    --sidebar-width: 280px;
+
+    /* 侧边栏与内容的间距 - 可调整：1rem-4rem */
+    --content-gap: 2.5rem;
+}
+
+/* ========================================
+   📐 网格布局核心配置
+   ======================================== */
+main {
+    width: 100% !important;
+    max-width: none !important;
+}
+
+main article.post-single {
+    display: grid !important;
+    grid-template-columns: var(--sidebar-width) 1fr !important;
+    gap: var(--content-gap) !important;
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+/* ========================================
+   📱 侧边栏容器配置
+   ======================================== */
+main article.post-single aside.sidebar {
+    /* 定位设置 */
+    position: sticky !important;
+    top: 2rem !important;  /* 距离顶部距离，可调整：1rem-4rem */
+
+    /* 尺寸设置 */
+    height: fit-content !important;
+    max-height: calc(100vh - 4rem) !important;  /* 最大高度，防止过长 */
+    overflow-y: auto !important;
+
+    /* 网格布局 */
+    order: -1 !important;  /* 确保在左侧 */
+    grid-column: 1 !important;
+
+    /* 边框和间距 - 移除了旧边框，使用新样式 */
+    padding-right: 1.5rem !important;
+    padding-left: 0.5rem !important;
+    margin: 0 !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+/* ========================================
+   📄 文章内容区域配置
+   ======================================== */
+main article.post-single .post-content-wrapper {
+    order: 2 !important;
+    grid-column: 2 !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+/* 文章内容区域强制样式 */
+main article.post-single .post-content-wrapper {
+    order: 2 !important;
+    grid-column: 2 !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+/* 美化的目录样式 - 紫色主题 */
+.sidebar-toc {
+    background: rgb(0, 0, 0) !important;
+    backdrop-filter: blur(10px) !important;
+    padding: 0 !important;
+    border-radius: 12px !important;
+    border: 2px solid rgb(139, 108, 239) !important;
+    box-shadow: 0 4px 20px rgba(139, 108, 239, 0.15) !important;
+    overflow: hidden !important;
+}
+
+.toc-title {
+    background: linear-gradient(135deg, rgb(139, 108, 239) 0%, rgb(108, 92, 231) 100%) !important;
+    color: white !important;
+    padding: 1rem 1.25rem !important;
+    margin: 0 !important;
+    font-size: 1.1rem !important;
+    font-weight: 700 !important;
+    text-align: center !important;
+    letter-spacing: 0.5px !important;
+    border-bottom: none !important;
+}
+
+.toc-content {
+    padding: 1.25rem !important;
+    font-size: 0.9rem !important;
+    background: rgb(0, 0, 0) !important;
+}
+
+.toc-list {
+    padding-left: 0 !important;
+    margin: 0 !important;
+    list-style: none !important;
+}
+
+.toc-list li {
+    margin: 0.35rem 0 !important;
+    line-height: 1.5 !important;
+}
+
+.toc-link {
+    color: var(--secondary) !important;
+    text-decoration: none !important;
+    padding: 0.5rem 0.75rem !important;
+    display: block !important;
+    border-radius: 8px !important;
+    transition: all 0.3s ease !important;
+    font-weight: 500 !important;
+    border-left: 3px solid transparent !important;
+    position: relative !important;
+    overflow: hidden !important;
+}
+
+.toc-link:hover {
+    color: rgb(139, 108, 239) !important;
+    background: linear-gradient(to right, rgba(139, 108, 239, 0.12), rgba(139, 108, 239, 0.06)) !important;
+    border-left-color: rgb(139, 108, 239) !important;
+    transform: translateX(2px) !important;
+}
+
+.toc-link.active {
+    color: rgb(139, 108, 239) !important;
+    font-weight: 700 !important;
+    background: linear-gradient(to right, rgba(139, 108, 239, 0.18), rgba(139, 108, 239, 0.10)) !important;
+    border-left-color: rgb(139, 108, 239) !important;
+    box-shadow: 0 2px 8px rgba(139, 108, 239, 0.25) !important;
+}
+
+/* 不同级别的缩进和样式 */
+.toc-level-1 {
+    font-weight: 600 !important;
+}
+
+.toc-level-2 {
+    margin-left: 1.2rem !important;
+    font-weight: 500 !important;
+    font-size: 0.85rem !important;
+}
+
+.toc-level-3 {
+    margin-left: 2.4rem !important;
+    font-weight: normal !important;
+    font-size: 0.8rem !important;
+}
+
+.toc-level-4 {
+    margin-left: 3.6rem !important;
+    font-weight: normal !important;
+    font-size: 0.75rem !important;
+}
+
+.toc-level-5 {
+    margin-left: 4.8rem !important;
+    font-weight: normal !important;
+    font-size: 0.7rem !important;
+}
+
+.toc-level-6 {
+    margin-left: 6rem !important;
+    font-weight: normal !important;
+    font-size: 0.65rem !important;
+}
+
+/* 添加紫色主题滚动条样式 */
+main article.post-single aside.sidebar::-webkit-scrollbar {
+    width: 6px !important;
+}
+
+main article.post-single aside.sidebar::-webkit-scrollbar-track {
+    background: rgba(139, 108, 239, 0.1) !important;
+    border-radius: 3px !important;
+}
+
+main article.post-single aside.sidebar::-webkit-scrollbar-thumb {
+    background: rgba(139, 108, 239, 0.4) !important;
+    border-radius: 3px !important;
+}
+
+main article.post-single aside.sidebar::-webkit-scrollbar-thumb:hover {
+    background: rgba(139, 108, 239, 0.6) !important;
+}
+
+/* 响应式设计 */
+@media (max-width: 1024px) {
+    main article.post-single {
+        grid-template-columns: 1fr !important;
+        gap: 1rem !important;
+    }
+
+    main article.post-single aside.sidebar {
+        position: static !important;
+        max-height: none !important;
+        overflow-y: visible !important;
+        order: 1 !important;
+        border-right: none !important;
+        border-bottom: 2px solid var(--border) !important;
+        padding-right: 0 !important;
+        padding-bottom: 1rem !important;
+        margin-bottom: 1rem !important;
+    }
+
+    main article.post-single .post-content-wrapper {
+        order: 2 !important;
+    }
+}
+</style>
+{{- end }}
+
+
+<article class="post-single">
+  {{- if (.Param "ShowToc") }}
+  <aside class="sidebar">
+    {{- partial "sidebar_toc.html" . }}
+  </aside>
+  {{- end }}
+
+  <div class="post-content-wrapper">
+    <header class="post-header">
+      {{ partial "breadcrumbs.html" . }}
+      <h1 class="post-title entry-hint-parent">
+        {{ .Title }}
+        {{- if .Draft }}
+        <span class="entry-hint" title="Draft">
+          <svg xmlns="http://www.w3.org/2000/svg" height="35" viewBox="0 -960 960 960" fill="currentColor">
+            <path
+              d="M160-410v-60h300v60H160Zm0-165v-60h470v60H160Zm0-165v-60h470v60H160Zm360 580v-123l221-220q9-9 20-13t22-4q12 0 23 4.5t20 13.5l37 37q9 9 13 20t4 22q0 11-4.5 22.5T862.09-380L643-160H520Zm300-263-37-37 37 37ZM580-220h38l121-122-18-19-19-18-122 121v38Zm141-141-19-18 37 37-18-19Z" />
+          </svg>
+        </span>
+        {{- end }}
+      </h1>
+      {{- if .Description }}
+      <div class="post-description">
+        {{ .Description }}
+      </div>
+      {{- end }}
+      {{- if not (.Param "hideMeta") }}
+      <div class="post-meta">
+        {{- partial "post_meta.html" . -}}
+        {{- partial "translation_list.html" . -}}
+        {{- partial "edit_post.html" . -}}
+        {{- partial "post_canonical.html" . -}}
+      </div>
+      {{- end }}
+    </header>
+    {{- $isHidden := (.Param "cover.hiddenInSingle") | default (.Param "cover.hidden") | default false }}
+    {{- partial "cover.html" (dict "cxt" . "IsSingle" true "isHidden" $isHidden) }}
+
+    {{- if .Content }}
+    <div class="post-content">
+      {{- if not (.Param "disableAnchoredHeadings") }}
+      {{- partial "anchored_headings.html" .Content -}}
+      {{- else }}{{ .Content }}{{ end }}
+    </div>
+    {{- end }}
+
+    <footer class="post-footer">
+      {{- $tags := .Language.Params.Taxonomies.tag | default "tags" }}
+      <ul class="post-tags">
+        {{- range ($.GetTerms $tags) }}
+        <li><a href="{{ .Permalink }}">{{ .LinkTitle }}</a></li>
+        {{- end }}
+      </ul>
+      {{- if (.Param "ShowPostNavLinks") }}
+      {{- partial "post_nav_links.html" . }}
+      {{- end }}
+      {{- if (and site.Params.ShowShareButtons (ne .Params.disableShare true)) }}
+      {{- partial "share_icons.html" . -}}
+      {{- end }}
+    </footer>
+
+    {{- if (.Param "comments") }}
+    {{- partial "comments.html" . }}
+    {{- end }}
+
+    {{- if (.Param "ShowToc") }}
+    <script src="{{ "js/toc-highlight.js" | relURL }}"></script>
+    {{- end }}
+  </div>
+</article>
+
+{{- end }}{{/* end main */}}
