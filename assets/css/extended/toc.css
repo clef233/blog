@@ -53,6 +53,13 @@ main article.post-single aside.sidebar {
 
 main article.post-single .post-content-wrapper {
   min-width: 0;
+  max-width: 800px;
+}
+
+/* 文章内容区域限制宽度 */
+main article.post-single .post-content-wrapper .post-content {
+  max-width: 100%;
+  overflow-wrap: break-word;
 }
 
 /* ========================================

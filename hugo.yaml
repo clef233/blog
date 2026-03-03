@@ -69,6 +69,9 @@ params:
   comments:
     enable: true
 
+  # 数学公式支持 (KaTeX)
+  math: true
+
 # 菜单配置
 menu:
   main:
