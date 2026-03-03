@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>博客管理后台</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <!-- Markdown 编辑器 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.css">
+</head>
+<body>
+    <div class="app">
+        <!-- 侧边栏 -->
+        <aside class="sidebar">
+            <div class="logo">
+                <h1>博客管理</h1>
+            </div>
+            <nav class="nav">
+                <a href="#" class="nav-item active" data-page="dashboard">
+                    <span class="icon">📊</span> 仪表盘
+                </a>
+                <a href="#" class="nav-item" data-page="articles">
+                    <span class="icon">📝</span> 文章管理
+                </a>
+                <a href="#" class="nav-item" data-page="editor">
+                    <span class="icon">✏️</span> 新建文章
+                </a>
+                <a href="#" class="nav-item" data-page="build">
+                    <span class="icon">🚀</span> 构建部署
+                </a>
+            </nav>
+        </aside>
+
+        <!-- 主内容 -->
+        <main class="main">
+            <!-- 仪表盘 -->
+            <div id="dashboard" class="page active">
+                <h2>仪表盘</h2>
+                <div class="stats-grid" id="stats-grid"></div>
+            </div>
+
+            <!-- 文章列表 -->
+            <div id="articles" class="page">
+                <div class="page-header">
+                    <h2>文章管理</h2>
+                    <button class="btn btn-primary" onclick="showPage('editor')">新建文章</button>
+                </div>
+                <div class="search-bar">
+                    <input type="text" id="search-input" placeholder="搜索文章..." oninput="filterArticles()">
+                </div>
+                <div class="articles-list" id="articles-list"></div>
+            </div>
+
+            <!-- 编辑器 -->
+            <div id="editor" class="page">
+                <div class="page-header">
+                    <h2 id="editor-title">新建文章</h2>
+                    <div class="btn-group">
+                        <button class="btn" onclick="saveDraft()">保存草稿</button>
+                        <button class="btn btn-primary" onclick="publishArticle()">发布</button>
+                    </div>
+                </div>
+                <div class="editor-container">
+                    <input type="hidden" id="article-path">
+                    <div class="form-group">
+                        <input type="text" id="article-title" placeholder="文章标题" class="title-input">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>标签（逗号分隔）</label>
+                            <input type="text" id="article-tags" placeholder="标签1, 标签2">
+                        </div>
+                        <div class="form-group">
+                            <label>分类</label>
+                            <input type="text" id="article-categories" placeholder="分类">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>描述</label>
+                        <textarea id="article-description" placeholder="文章描述" rows="2"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>正文</label>
+                        <textarea id="article-content"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 构建部署 -->
+            <div id="build" class="page">
+                <h2>构建部署</h2>
+                <div class="build-section">
+                    <div class="build-card">
+                        <h3>本地预览</h3>
+                        <p>启动 Hugo 本地服务器，在浏览器中预览博客</p>
+                        <button class="btn" onclick="startPreview()">启动预览</button>
+                    </div>
+                    <div class="build-card">
+                        <h3>构建站点</h3>
+                        <p>生成静态文件到 public 目录</p>
+                        <button class="btn btn-primary" onclick="buildSite()">构建</button>
+                    </div>
+                    <div class="build-card">
+                        <h3>部署到 GitHub</h3>
+                        <p>提交更改并推送到 GitHub，自动触发部署</p>
+                        <button class="btn btn-accent" onclick="deploySite()">部署</button>
+                    </div>
+                </div>
+                <div class="build-log" id="build-log"></div>
+            </div>
+        </main>
+    </div>
+
+    <!-- 确认对话框 -->
+    <div class="modal" id="confirm-modal">
+        <div class="modal-content">
+            <h3 id="modal-title">确认</h3>
+            <p id="modal-message"></p>
+            <div class="modal-actions">
+                <button class="btn" onclick="closeModal()">取消</button>
+                <button class="btn btn-danger" id="modal-confirm">确认</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.js"></script>
+    <script src="/static/js/app.js"></script>
+</body>
+</html>
