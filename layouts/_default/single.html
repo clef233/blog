@@ -1,5 +1,9 @@
 {{- define "main" }}
 
+{{- if or .Params.math (eq site.Params.math true) }}
+{{- partial "math.html" . }}
+{{- end }}
+
 {{- if (.Param "ShowToc") }}
 <!-- 移动端目录切换按钮 -->
 <button class="toc-toggle-btn" onclick="toggleToc()" aria-label="目录">
